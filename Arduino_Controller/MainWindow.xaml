@@ -4,9 +4,117 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Arduino_Controller"
+        xmlns:st="http://schemas.spicytaco.io/"
+        xmlns:ex="clr-namespace:ExtendedRichTextBoxLibNuGet;assembly=ExtendedRichTextBox"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        x:Name="AppWindow"
+        Title="Arduino Dashboard" Height="600" Width="1024">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Window}">
+
+                        <!--Vnější okraj s odsazením pro shadow efekt-->
+                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+
+                            <!--Hlavní obrys okna-->
+                            <Grid>
+                                <!--Hlavní obrys okna s efektem stínu-->
+                                <Border CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                                        Background="{DynamicResource MaterialDesignPaper}">
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" Opacity="0.5"/>
+                                    </Border.Effect>
+                                </Border>
+
+                                <!--Obsah hlavního okna -->
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!--Title Bar-->
+                                    <Grid Grid.Row="0"  Panel.ZIndex="1">
+                                        <materialDesign:ColorZone Height="{Binding TitleHeightGridLength, FallbackValue=62}"  Mode="PrimaryDark" CornerRadius="10,10,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                                            <!--Obsah Titlebaru-->
+                                            <Grid  >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <!--Menu tlačítko-->
+                                                <ToggleButton Grid.Column="0" WindowChrome.IsHitTestVisibleInChrome="True" Margin="10" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                                                <!--Titulek okna s ikonkou-->
+                                                <st:StackPanel Grid.Column="1" Grid.ColumnSpan="3" MarginBetweenChildren="5" VerticalAlignment="Center" Orientation="Horizontal" st:StackPanel.Fill="Fill" HorizontalAlignment="Center">
+                                                    <materialDesign:PackIcon Kind="Chip" Width="37" Height="37" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
+                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay4TextBlock}" VerticalAlignment="Center" FontSize="27" HorizontalAlignment="Center" >PCB Laser Exposer</TextBlock>
+                                                </st:StackPanel>
+                                                <!--Tlačítka pro minimalizaci, maximalizaci a zavření okna-->
+                                                <st:StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                    <Button WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke" Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
+                                                        <materialDesign:PackIcon Kind="WindowMinimize" />
+                                                    </Button>
+                                                    <Button WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke"  Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
+                                                        <materialDesign:PackIcon Kind="WindowMaximize"/>
+                                                    </Button>
+                                                    <Button Command="{Binding WindowClose}" WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke"  Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
+                                                        <materialDesign:PackIcon Kind="WindowClose"/>
+                                                    </Button>
+                                                </st:StackPanel>
+                                            </Grid>
+                                        </materialDesign:ColorZone>
+                                    </Grid>
+
+
+                                    <Grid Grid.Row="1">
+
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            GlassFrameThickness="0"
+            CornerRadius="0"
+            />
+    </WindowChrome.WindowChrome>
+
+    <st:StackPanel Orientation="Vertical" MarginBetweenChildren="10">
+        <!--Horní lišta-->
+        <st:StackPanel>
+
+        </st:StackPanel>
+        <!--Content-->
+        <st:StackPanel st:StackPanel.Fill="Fill" Margin="5" MarginBetweenChildren="10">
+            <st:StackPanel Orientation="Vertical" st:StackPanel.Fill="Fill" MarginBetweenChildren="10">
+
+                <ex:ExtendedRichTextBox x:Name="txtBlock" Style="{DynamicResource MaterialCommandline}" st:StackPanel.Fill="Fill" VerticalScrollBarVisibility="Auto"/>
+                <Slider x:Name="slider" Maximum="1000" Minimum="50"/>
+                <Button x:Name="btnRun" Content="Spustit" FontSize="18"/>
+            </st:StackPanel>
+        </st:StackPanel>
+    </st:StackPanel>
 </Window>

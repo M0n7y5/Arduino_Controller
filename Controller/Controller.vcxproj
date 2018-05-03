@@ -47,10 +47,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <ForcedIncludeFiles>%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\Controller;$(ProjectDir)..\..\..\..\..\..\Program Files (x86)\Arduino\libraries;$(ProjectDir)..\..\..\..\Documents\Arduino\libraries;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\libraries;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\cores\maple;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\cores\maple\avr;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\cores\maple\libmaple;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\cores\maple\stm32f1;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\variants\generic_stm32f103c;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\system\libmaple;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\system\libmaple\include;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\system\libmaple\stm32f1\include;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\system\libmaple\usb\stm32f1;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1\2018.4.26\system\libmaple\usb\usb_lib;$(ProjectDir)..\..\..\..\AppData\Local\arduino15\packages\stm32duino\hardware\STM32F1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>$(ProjectDir)__vm\.Controller.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+      <PreprocessorDefinitions>_VMDEBUG=1;DEBUG_LEVEL=DEBUG_NONE;BOARD_generic_stm32f103c;VECT_TAB_ADDR=0x8002000;ERROR_LED_PORT=GPIOC;ERROR_LED_PIN=13;F_CPU=72000000L;ARDUINO=10805;ARDUINO_GENERIC_STM32F103C;ARDUINO_ARCH_STM32F1;SERIAL_USB;GENERIC_BOOTLOADER;MCU_STM32F103C8;__STM32F1__;__cplusplus=201103L;_VMICRO_INTELLISENSE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -80,6 +80,9 @@
     <None Include="Controller.ino">
       <FileType>CppCode</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="__vm\.Controller.vsarduino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
