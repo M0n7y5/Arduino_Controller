@@ -58,7 +58,7 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <!--Menu tlačítko-->
-                                                <ToggleButton Grid.Column="0" WindowChrome.IsHitTestVisibleInChrome="True" Margin="10" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                                                <ToggleButton Command="{Binding MenuCommand}" Grid.Column="0" WindowChrome.IsHitTestVisibleInChrome="True" Margin="10" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
                                                 <!--Titulek okna s ikonkou-->
                                                 <st:StackPanel Grid.Column="1" Grid.ColumnSpan="3" MarginBetweenChildren="5" VerticalAlignment="Center" Orientation="Horizontal" st:StackPanel.Fill="Fill" HorizontalAlignment="Center">
                                                     <materialDesign:PackIcon Kind="Chip" Width="37" Height="37" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
@@ -66,13 +66,13 @@
                                                 </st:StackPanel>
                                                 <!--Tlačítka pro minimalizaci, maximalizaci a zavření okna-->
                                                 <st:StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                    <Button WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke" Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
+                                                    <Button Command="{Binding MinimizeCommand}" WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke" Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
                                                         <materialDesign:PackIcon Kind="WindowMinimize" />
                                                     </Button>
-                                                    <Button WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke"  Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
+                                                    <Button Command="{Binding MaximizeCommand}" WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke"  Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
                                                         <materialDesign:PackIcon Kind="WindowMaximize"/>
                                                     </Button>
-                                                    <Button Command="{Binding WindowClose}" WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke"  Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
+                                                    <Button Command="{Binding CloseCommand}" WindowChrome.IsHitTestVisibleInChrome="True" Foreground="WhiteSmoke"  Style="{DynamicResource MaterialDesignFlatButton}" Height="Auto">
                                                         <materialDesign:PackIcon Kind="WindowClose"/>
                                                     </Button>
                                                 </st:StackPanel>

@@ -3,8 +3,6 @@
                     xmlns:local="clr-namespace:Arduino_Controller">
     
     <!--Systémové tlačítka okna-->
-    <Style TargetType="{x:Type Button}" BasedOn="">
-        
-    </Style>
+
     
 </ResourceDictionary>

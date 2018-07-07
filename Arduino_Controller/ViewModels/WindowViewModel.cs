@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Arduino_Controller
 {
@@ -24,9 +26,11 @@ namespace Arduino_Controller
         /// </summary>
         private int mWindowRadius = 10;
 
+        private bool menuOpened;
+
         #endregion
 
-        #region Public Members
+        #region Public Properties
 
         /// <summary>
         /// Velikost ohraničení umožňující měnit velikost okna
@@ -90,6 +94,29 @@ namespace Arduino_Controller
 
         #endregion
 
+        #region Commands
+        /// <summary>
+        /// Příkaz pro minimalizování okna
+        /// </summary>
+        public ICommand MinimizeCommand { get; set; }
+
+        /// <summary>
+        /// Příkaz pro zavření okna
+        /// </summary>
+        public ICommand CloseCommand { get; set; }
+
+        /// <summary>
+        /// Příkaz pro maximalizování okna
+        /// </summary>
+        public ICommand MaximizeCommand { get; set; }
+
+        /// <summary>
+        /// Příkaz pro otevření a zavření hlavního menu 
+        /// </summary>
+        public ICommand MenuCommand { get; set; }
+
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Default Constructor
@@ -106,6 +133,21 @@ namespace Arduino_Controller
                 OnPropertyChanged(nameof(WindowRadius));
                 OnPropertyChanged(nameof(WindowCornerRadius));
             };
+
+            // Opravuje bug při zvětšovaní okna 
+            var WinRes = new WindowResizer(mWindow);
+
+            // Inicilaizace příkazů
+            MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
+            MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
+            CloseCommand = new RelayCommand(() => mWindow.Close());
+            MenuCommand = new RelayCommand(() => OpenMenu());
+        }
+
+        private void OpenMenu()
+        {
+            menuOpened ^= true;
+            Console.WriteLine($"Menu otevreno: {menuOpened}");
         }
         #endregion
     }
