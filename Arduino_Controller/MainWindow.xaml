@@ -19,7 +19,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
         x:Name="AppWindow"
-        Title="Arduino Dashboard" Height="600" Width="1024">
+        Title="Arduino Dashboard" Height="600" Width="1024" 
+        MinWidth="{Binding MinWindowWidth}" 
+        MinHeight="{Binding MinWindowHeight}">
 
     <Window.Resources>
         <Style TargetType="{x:Type local:MainWindow}">
@@ -49,7 +51,7 @@
 
                                     <!--Title Bar-->
                                     <Grid Grid.Row="0"  Panel.ZIndex="1">
-                                        <materialDesign:ColorZone Height="{Binding TitleHeightGridLength, FallbackValue=62}"  Mode="PrimaryDark" CornerRadius="10,10,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                                        <materialDesign:ColorZone Height="{Binding TitleHeightGridLength, FallbackValue=46}"  Mode="PrimaryDark" CornerRadius="{Binding TitleBarWindowCornerRadius}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
                                             <!--Obsah Titlebaru-->
                                             <Grid  >
                                                 <Grid.ColumnDefinitions>
@@ -58,11 +60,11 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <!--Menu tlačítko-->
-                                                <ToggleButton Command="{Binding MenuCommand}" Grid.Column="0" WindowChrome.IsHitTestVisibleInChrome="True" Margin="10" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                                                <ToggleButton Command="{Binding MenuCommand}" Grid.Column="0" WindowChrome.IsHitTestVisibleInChrome="True" Margin="5" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
                                                 <!--Titulek okna s ikonkou-->
                                                 <st:StackPanel Grid.Column="1" Grid.ColumnSpan="3" MarginBetweenChildren="5" VerticalAlignment="Center" Orientation="Horizontal" st:StackPanel.Fill="Fill" HorizontalAlignment="Center">
-                                                    <materialDesign:PackIcon Kind="Chip" Width="37" Height="37" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
-                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay4TextBlock}" VerticalAlignment="Center" FontSize="27" HorizontalAlignment="Center" >PCB Laser Exposer</TextBlock>
+                                                    <materialDesign:PackIcon Kind="Chip" Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center"/>
+                                                    <TextBlock Style="{StaticResource MaterialDesignDisplay4TextBlock}" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title, FallbackValue='Arduino Controller'}" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Center" />
                                                 </st:StackPanel>
                                                 <!--Tlačítka pro minimalizaci, maximalizaci a zavření okna-->
                                                 <st:StackPanel Grid.Column="2" Orientation="Horizontal">
@@ -80,9 +82,9 @@
                                         </materialDesign:ColorZone>
                                     </Grid>
 
-
+                                    <!--HLavní content okna-->
                                     <Grid Grid.Row="1">
-
+                                        <ContentPresenter Content="{TemplateBinding Content}"/>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -112,7 +114,7 @@
             <st:StackPanel Orientation="Vertical" st:StackPanel.Fill="Fill" MarginBetweenChildren="10">
 
                 <ex:ExtendedRichTextBox x:Name="txtBlock" Style="{DynamicResource MaterialCommandline}" st:StackPanel.Fill="Fill" VerticalScrollBarVisibility="Auto"/>
-                <Slider x:Name="slider" Maximum="1000" Minimum="50"/>
+                <Slider x:Name="slider" Maximum="1000" Minimum="50" Style="{DynamicResource MaterialDesignDiscreteSlider}"/>
                 <Button x:Name="btnRun" Content="Spustit" FontSize="18"/>
             </st:StackPanel>
         </st:StackPanel>

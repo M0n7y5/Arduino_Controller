@@ -26,11 +26,30 @@ namespace Arduino_Controller
         /// </summary>
         private int mWindowRadius = 10;
 
+        /// <summary>
+        /// The last known dock position
+        /// </summary>
+        private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
+
         private bool menuOpened;
 
         #endregion
 
         #region Public Properties
+        /// <summary>
+        /// Minimální šířka okna
+        /// </summary>
+        public double MinWindowWidth { get; set; } = 650;
+
+        /// <summary>
+        /// Minimální výška okna
+        /// </summary>
+        public double MinWindowHeight { get; set; } = 300;
+
+        /// <summary>
+        /// True if the window should be borderless because it is docked or maximized
+        /// </summary>
+        public bool Borderless { get { return (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); } }
 
         /// <summary>
         /// Velikost ohraničení umožňující měnit velikost okna
@@ -49,7 +68,7 @@ namespace Arduino_Controller
         {
             get
             {
-                return mWindow.WindowState == WindowState.Maximized ? 0 : mOuterMarginSize;
+                return Borderless ? 0 : mOuterMarginSize;
             }
             set
             {
@@ -63,7 +82,6 @@ namespace Arduino_Controller
         /// </summary>
         public Thickness OuterMarginSizeThickness { get { return new Thickness(OuterMarginSize); } }
 
-
         /// <summary>
         /// Zoblení okrajů okna
         /// </summary>
@@ -71,7 +89,7 @@ namespace Arduino_Controller
         {
             get
             {
-                return mWindow.WindowState == WindowState.Maximized ? 0 : mWindowRadius;
+                return Borderless ? 0 : mWindowRadius;
             }
             set
             {
@@ -86,9 +104,14 @@ namespace Arduino_Controller
         public CornerRadius WindowCornerRadius { get { return new CornerRadius(WindowRadius); } }
 
         /// <summary>
+        /// Zoblení okrajů okna
+        /// </summary>
+        public CornerRadius TitleBarWindowCornerRadius { get { return new CornerRadius(WindowRadius,WindowRadius,0,0); } }
+
+        /// <summary>
         /// Výška title baru ... Titulek okna
         /// </summary>
-        public int TitleHeight { get; set; } = 56;
+        public int TitleHeight { get; set; } = 40;
 
         public GridLength TitleHeightGridLength { get { return new GridLength(TitleHeight + ResizeBorder); } }
 
@@ -126,22 +149,38 @@ namespace Arduino_Controller
         {
             mWindow = window;
             mWindow.StateChanged += (sender, e) => {
-                // Zkotroluje a spustí eventy pokud se stav okna změnil
-                OnPropertyChanged(nameof(ResizeBorderThickness));
-                OnPropertyChanged(nameof(OuterMarginSize));
-                OnPropertyChanged(nameof(OuterMarginSizeThickness));
-                OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
+                WindowResized();
             };
 
             // Opravuje bug při zvětšovaní okna 
             var WinRes = new WindowResizer(mWindow);
+
+            // Listen out for dock changes
+            WinRes.WindowDockChanged += (dock) =>
+            {
+                // Store last position
+                mDockPosition = dock;
+
+                // Fire off resize events
+                WindowResized();
+            };
 
             // Inicilaizace příkazů
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
             MaximizeCommand = new RelayCommand(() => mWindow.WindowState ^= WindowState.Maximized);
             CloseCommand = new RelayCommand(() => mWindow.Close());
             MenuCommand = new RelayCommand(() => OpenMenu());
+        }
+
+        private void WindowResized()
+        {
+            // Zkotroluje a spustí eventy pokud se stav okna změnil
+            OnPropertyChanged(nameof(ResizeBorderThickness));
+            OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
+            OnPropertyChanged(nameof(WindowRadius));
+            OnPropertyChanged(nameof(WindowCornerRadius));
+            OnPropertyChanged(nameof(TitleBarWindowCornerRadius));
         }
 
         private void OpenMenu()
